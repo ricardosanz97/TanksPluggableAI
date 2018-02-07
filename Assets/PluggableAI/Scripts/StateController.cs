@@ -9,11 +9,13 @@ public class StateController : MonoBehaviour {
 
 	public EnemyStats enemyStats;
 	public Transform eyes;
-
+    public State currentState;
 
 	[HideInInspector] public NavMeshAgent navMeshAgent;
 	[HideInInspector] public Complete.TankShooting tankShooting;
 	[HideInInspector] public List<Transform> wayPointList;
+    [HideInInspector] public int nextWayPoint;
+    [HideInInspector] public Transform chaseTarget;
 
 	private bool aiActive;
 
@@ -37,4 +39,18 @@ public class StateController : MonoBehaviour {
 		}
 	}
 
+    private void Update()
+    {
+        if (!aiActive)
+            return;
+        currentState.UpdateState(this);
+    }
+    private void OnDrawGizmos()
+    {
+        if (currentState != null && eyes != null)
+        {
+            Gizmos.color = currentState.sceneGizmoColor;
+            Gizmos.DrawWireSphere(eyes.position, enemyStats.lookSphereCastRadius);
+        }
+    }
 }
