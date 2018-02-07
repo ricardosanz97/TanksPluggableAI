@@ -7,7 +7,7 @@ public class LookDecision : Decision{
 
     public override bool Decide(StateController controller)
     {
-        bool targetVisible = Look(controller);
+        bool targetVisible = Look(controller); //if we see an enemy, we return true. So the condition is true and we keep chasing enemy and attacking him. If we dont see an enemy, we go to alert scanner state.
         return targetVisible;
 
     }

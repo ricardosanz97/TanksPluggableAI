@@ -10,12 +10,14 @@ public class StateController : MonoBehaviour {
 	public EnemyStats enemyStats;
 	public Transform eyes;
     public State currentState;
+    public State remainState;
 
 	[HideInInspector] public NavMeshAgent navMeshAgent;
 	[HideInInspector] public Complete.TankShooting tankShooting;
 	[HideInInspector] public List<Transform> wayPointList;
     [HideInInspector] public int nextWayPoint;
     [HideInInspector] public Transform chaseTarget;
+    [HideInInspector] public float stateTimeElapsed;
 
 	private bool aiActive;
 
@@ -52,5 +54,26 @@ public class StateController : MonoBehaviour {
             Gizmos.color = currentState.sceneGizmoColor;
             Gizmos.DrawWireSphere(eyes.position, enemyStats.lookSphereCastRadius);
         }
+    }
+
+    public void TransitionToState(State nextState)
+    {
+
+        if (nextState != remainState)
+        {
+            currentState = nextState;
+        }
+
+    }
+
+    public bool CheckIfCountDownElapsed(float duration)
+    {
+        stateTimeElapsed += Time.deltaTime;
+        return (stateTimeElapsed >= duration);//return false if is lower or true if its higher.
+    }
+    
+    private void OnExitState()
+    {
+        stateTimeElapsed = 0f;
     }
 }

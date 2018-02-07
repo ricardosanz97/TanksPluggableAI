@@ -76,7 +76,7 @@ namespace Complete
             else if (Input.GetButtonUp (m_FireButton) && !m_Fired)
             {
                 // ... launch the shell.
-				Fire (m_CurrentLaunchForce, 1);
+				Fire (m_CurrentLaunchForce, 0.01f);
 			
             }
         }
